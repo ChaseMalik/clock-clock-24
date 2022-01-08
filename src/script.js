@@ -154,6 +154,10 @@ function setTime(time) {
   setDigit(1, digits[time.charAt(1)]);
   setDigit(2, digits[time.charAt(3)]);
   setDigit(3, digits[time.charAt(4)]);
+
+  const hour = Number(time.slice(0, 2));
+  const isDark = hour < 7 || hour > 18;
+  document.documentElement.setAttribute('data-dark-mode', isDark);
 }
 
 let state;
