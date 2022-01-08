@@ -18,3 +18,5 @@ CodePen by Manuel Wieser | Design by Humans since 1982
 Followed guidance here - https://raspberrypi.stackexchange.com/questions/69204/open-chromium-full-screen-on-start-up
 
 In particular, edited `/home/pi/.config/lxsession/LXDE-pi/autostart`
+
+To auto git pull, run `@bash /path/auto-update.sh` in the autostart file
