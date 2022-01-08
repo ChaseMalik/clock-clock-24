@@ -149,26 +149,38 @@ function setDigit(id, values) {
   }
 }
 
-function setTime(time) {
+function setTime(time, isDark) {
   setDigit(0, digits[time.charAt(0)]);
   setDigit(1, digits[time.charAt(1)]);
   setDigit(2, digits[time.charAt(3)]);
   setDigit(3, digits[time.charAt(4)]);
 
-  const hour = Number(time.slice(0, 2));
-  const isDark = hour < 7 || hour > 18;
   document.documentElement.setAttribute('data-dark-mode', isDark);
 }
 
 let state;
 let interval;
+let dateNumber;
+let times;
+
+const latitude = 39;
+const longitude = -94;
 
 function startClock() {
   state = '----';
   interval = window.setInterval(() => {
-    const time = new Date(Date.now() + 10000).toTimeString();
+    const date = new Date(Date.now() + 10000);
+    const time = date.toTimeString();
     if (time !== state) {
-      setTime(time);
+      if (dateNumber !== date.getDate()) {
+        dateNumber = date.getDate();
+        times = SunCalc.getTimes(date, latitude, longitude);
+      }
+      setTime(
+        time,
+        date.getTime() < times.sunrise.getTime() ||
+          date.getTime() > times.sunset.getTime()
+      );
       state = time;
     }
   }, 1000);
